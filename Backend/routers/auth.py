@@ -60,7 +60,12 @@ def login_user(credentials: LoginRequest, db: Session = Depends(get_db)):
     # Create JWT token
     access_token = create_access_token({"sub": user.email, "role": user.role})
 
-    return TokenResponse(access_token=access_token)
+    return {
+        "access_token": access_token,
+        "location": user.location,
+        "role": user.role,
+        "name": user.name
+    }
 
 @router.post("/logout")
 def logout_user():

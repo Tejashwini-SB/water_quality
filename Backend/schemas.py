@@ -37,6 +37,10 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+    location: str
+    role: UserRole
+    name: str
+
 
 
 
