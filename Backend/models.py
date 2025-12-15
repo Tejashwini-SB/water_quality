@@ -20,4 +20,23 @@ class User(Base):
     location = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('NOW()'))
 
+class ReportStatus(str, enum.Enum):
+    pending = "pending"
+    verified = "verified"
+    rejected = "rejected"
 
+class Report(Base):
+    __tablename__ = "reports"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+
+    photo_url = Column(String, nullable=True)
+    location = Column(String, nullable=False)
+    description = Column(String, nullable=False)
+    water_source = Column(String, nullable=True)
+
+    status = Column(Enum(ReportStatus), default=ReportStatus.pending)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text("NOW()"))
+
+    user = relationship("User")

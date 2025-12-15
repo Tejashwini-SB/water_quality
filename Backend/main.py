@@ -4,11 +4,15 @@ import models
 from database import Base, engine
 from routers import auth
 from fastapi.middleware.cors import CORSMiddleware
+from routers import reports
+
+
+
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Water Quality Monitor Backend")
-
+app.include_router(reports.router)
 app.include_router(auth.router)
 app.add_middleware(
     CORSMiddleware,
